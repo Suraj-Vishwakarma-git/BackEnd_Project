@@ -16,7 +16,12 @@ export const userRegisterController=async (req,res)=>{
         email,password,name
     })
     const token=jwt.sign({userId:user._id},JWT_SECRET,{expiresIn:"3d"});
-    res.cookie("token",token)
+     res.cookie("token", token, {
+     httpOnly: true,
+     secure: false, 
+     sameSite: "lax",
+     maxAge: 3 * 24 * 60 * 60 * 1000 
+});
     res.status(201).json({
         user:{
             _id:user._id,
@@ -48,7 +53,12 @@ export const userLoginController=async (req,res)=>{
     const isValidPassword=await user.comparePassword(password);
     if(!isValidPassword) return res.status(401).json({message:"Password Or Email is Invalid"});
     const token=jwt.sign({userId:user._id},JWT_SECRET,{expiresIn:"3d"});
-    res.cookie("token",token)
+    res.cookie("token", token, {
+     httpOnly: true,
+     secure: false, 
+     sameSite: "lax",
+     maxAge: 3 * 24 * 60 * 60 * 1000 
+});
     res.status(200).json({
         user:{
             _id:user._id,
