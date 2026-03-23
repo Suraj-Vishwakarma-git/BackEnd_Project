@@ -19,6 +19,12 @@ const userSchema=new mongoose.Schema({
         required:[true,"Password is required"],
         minlength:[6,"password should be grater equal to 6 characters"],
     },
+    systemUser:{
+        type:Boolean,
+        default:false,
+        immutable:true,
+        select:false
+    }
 },{timestamps:true});
 
 userSchema.pre("save",async function (){
