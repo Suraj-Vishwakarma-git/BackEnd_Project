@@ -57,3 +57,27 @@ export const sendEmail = async (to, subject, name) => {
     console.log(e);
   }
 };
+
+export const sendTransactionEmail = async (email, name, amount, toAccount) => {
+    try {
+        const mailOptions = {
+            from: "ssvsurajvishwakarma@gmail.com",
+            to: email,
+            subject: "Transaction Successful 💸",
+            text: `
+Hello ${name},
+
+Your transaction of ₹${amount} has been successfully completed.
+
+Transferred To Account: ${toAccount}
+
+Thank you for using our service 🚀
+            `
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log("Email sent successfully");
+    } catch (error) {
+        console.log("Email failed:", error.message);
+    }
+};
